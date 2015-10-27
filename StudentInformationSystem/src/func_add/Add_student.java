@@ -1,10 +1,12 @@
 package func_add;
+
+
 import java.util.Scanner;
 import java.io.FileInputStream;
 
 public class Add_student {
 
-	int duple; // 중복인지 아닌지를 담는 변수
+	int duplicate; // 중복인지 아닌지를 담는 변수
 	
 	//입력받아서 값 넣기
 	public void main(String args[]) throws Exception	{
@@ -20,16 +22,16 @@ public class Add_student {
 			System.out.println("이름 : ");
 			input_name = input_some.next();
 			System.out.println("학과 : ");
-			input_depart = input_some.nextLine();
+			input_depart = input_some.next();
 		
 			//중복 체크 함수 호출
-			duple_check(input_id);
+			isDuplication(input_id);
 		
 			
-			if (duple == 1) {
+			if (duplicate == 1) {
 				System.out.println("-> 이미 추가된 학번입니다.\n");
 				System.out.println("-> 다시 작성해 주세요.\n");
-			} else if (duple == 0) {
+			} else if (duplicate == 0) {
 				// 저장 함수 호출
 				System.out.println("-> 성공적으로 학생정보가 추가되었습니다.\n");
 				break;
@@ -37,17 +39,17 @@ public class Add_student {
 		}
 	}
 	
-	public void duple_check(int input_id) {
+	public void isDuplication(int input_id) {
 		int inputid = input_id;
-		int duple_id = 0;
+		int duplication = 0;
 		
 		//입력받은 학번과 DB의 학번 중복 찾기
 		
 		//중복 있으면 중복으로 출력
-		if (duple_id >= 0) {
-			duple = 1; // 중복
-		} else if (duple_id == 0) {
-			duple = 0; // 중복 없음
+		if (duplication >= 0) {
+			duplicate = 1; // 중복
+		} else if (duplication == 0) {
+			duplicate = 0; // 중복 없음
 		}
 	}
 }
