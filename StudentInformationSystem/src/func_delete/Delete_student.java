@@ -1,71 +1,62 @@
-package func_delete;
-
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.Scanner;
+ 
+ 
+public class Delete_student {
+    public static void main(String[] args)
+    {
+        search();
+    }
+     
+    private static void search(){
+        Connection conn = null;
+        Statement stmt = null;
+        ResultSet rs = null;
+        int r = 0;
+         
+        try{
+            Class.forName("com.mysql.jdbc.Driver");
+            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/swe2015" +
+                    "characterEncoding=utf-8", "root","1234");
+            //System.out.println("db connect");
 
-public class Delete_student 
-{
-	static String Database;
-	static String Table;
-	static String Command;
+			Scanner sc = new Scanner(System.in);
 
-	static String Headers;
-	static String Values;
-	static String Target;
-
-	public static void main(String[] args) 
-	{
-		Scanner input = new Scanner(System.in);
-		System.out.print("Database Name: ");
-		Database = input.nextLine();
-		System.out.print("Table Name: ");
-		Table = input.nextLine();
-
-		while(true)
-		{
-			System.out.print("Command 입력 [insert/show/update/delete]: ");
-			Command = input.nextLine();
-
-			switch (Command)
-			{
-			case "delete":
-				System.out.print("Target: ");
-				Target = input.nextLine();
-				Database_delete();
-				break;
+			// 내용 삭제
+			System.out.print("삭제 할 내용(예 : id=1215117) : ");
+			String cn = sc.nextLine();
+			 
+			stmt = (Statement) conn.createStatement();
+			r = stmt.executeUpdate("delete from student where " + cn );
+			 
+			if( r == 0 ){
+				System.out.println("삭제 할  내용을 찾을 수 없습니다.");
+			}else{
+				System.out.println("삭제 되었습니다.");
 			}
+			System.out.println("");
+			search();
+			 
+			return;
 		}
-	}
-
-	public static void Database_delete()
-	{
-		Connection conn;
-		PreparedStatement stmt;
-
-		String jdbcUrl = "jdbc:mysql://127.0.0.1:3306" + Database;
-		String UserID = "root";
-		String UserPassword = "0000";
-
-		try
-		{
-			conn = DriverManager.getConnection(jdbcUrl, UserID, UserPassword);
-			try
-			{
-				Class.forName("com.mysql.jdbc.Driver");
-			}
-			catch (ClassNotFoundException e)
-			{
-				e.printStackTrace();
-			}
-			stmt = conn.prepareStatement("deletefrom" + Table + "where" + Target.split("=")[0] + "=?");
-			stmt.setString(1, Target.split("=")[1]);
-			stmt.executeUpdate();
-			stmt.close();
-			conn.close();
-		}
-		catch (SQLException e)
-		{
-			e.printStackTrace();
-		}
-	}
+        catch(ClassNotFoundException cnfe){
+            System.out.println("해당 클래스를 찾을 수 없습니다." + cnfe.getMessage());
+        }
+         
+        catch(SQLException se){
+            System.out.println(se.getMessage());
+        }
+         
+        try{
+             
+            conn.close();
+        }
+        catch(SQLException e){
+            System.out.println(e.getMessage());
+        }
+    }
 }
