@@ -3,7 +3,6 @@ package func_add;
 import java.util.Scanner;
 import util.DatabaseQuery;
 
-
 public class Add_student {
 
 	static int occur_duplecation; // 중복인지 아닌지를 담는 변수

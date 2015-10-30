@@ -2,7 +2,6 @@ package util;
 
 import java.sql.*;
 
-
 public class DatabaseQuery {
 	static String Values;
 	static String Target;
