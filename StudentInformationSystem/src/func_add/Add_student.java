@@ -1,7 +1,6 @@
 package func_add;
 
 import java.util.Scanner;
-//import java.io.FileInputStream;
 import util.DatabaseQuery;
 
 public class Add_student {
