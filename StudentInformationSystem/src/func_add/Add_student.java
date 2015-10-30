@@ -12,7 +12,7 @@ public class Add_student {
 	static String input_phonenumber; // 전화번호 입력
 	
 	//입력받아서 값 넣기
-	public static void main(String args[]) throws Exception	{
+	public static void studentinfo_add() throws Exception	{
 		Scanner input_some = new Scanner(System.in);
 		
 		while (true) {
