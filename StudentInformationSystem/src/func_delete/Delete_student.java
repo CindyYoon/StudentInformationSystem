@@ -22,18 +22,17 @@ public class Delete_student {
          
         try{
             Class.forName("com.mysql.jdbc.Driver");
-            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/swe2015" +
-                    "characterEncoding=utf-8", "root","1234");
+            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/swe2015", "root","1234");
             //System.out.println("db connect");
 
 			Scanner sc = new Scanner(System.in);
 
 			// 내용 삭제
-			System.out.print("삭제 할 내용(예 : id=1215117) : ");
+			System.out.print("삭제 할 학생의 학번을 입력해주세요. : ");
 			String cn = sc.nextLine();
 			 
 			stmt = (Statement) conn.createStatement();
-			r = stmt.executeUpdate("delete from student where " + cn );
+			r = stmt.executeUpdate("delete from student where ID =" + cn );
 			 
 			if( r == 0 ){
 				System.out.println("삭제 할  내용을 찾을 수 없습니다.");
