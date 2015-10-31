@@ -16,13 +16,13 @@ public class Add_student {
 		Scanner input_some = new Scanner(System.in);
 		
 		while (true) {
-			System.out.println("학     번 : ");
+			System.out.print("학     번 : ");
 			input_id = input_some.nextInt();
-			System.out.println("이     름 : ");
+			System.out.print("이     름 : ");
 			input_name = input_some.next();
-			System.out.println("학     과 : ");
+			System.out.print("학     과 : ");
 			input_depart = input_some.next();
-			System.out.println("전화번호 : ");
+			System.out.print("전화번호 : ");
 			input_phonenumber = input_some.next();
 		
 			//중복 체크 함수 호출
