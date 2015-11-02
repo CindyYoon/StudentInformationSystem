@@ -15,9 +15,9 @@ public class Delete_student {
 	public static void studentinfo_delete() throws Exception{
 
 		Scanner sc = new Scanner(System.in);
-
 		// 내용 삭제
 		System.out.print("삭제 할 학생의 학번을 입력해주세요. : ");
+		//입력한 번호를 input_id에 저장함
 		int input_id = sc.nextInt();
 		
 		//중복 체크 함수 호출
