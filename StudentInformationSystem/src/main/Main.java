@@ -6,6 +6,7 @@ import func_delete.*;
 import func_update.Update_student;
 //import func_update.*;
 //import func_view.*;
+import func_view.View_student;
 
 public class Main {
 	
@@ -36,6 +37,7 @@ public class Main {
 					Update_student.studentinfo_update();
 					break;
 				case 4:
+					View_student.View();
 					break;
 				case 5:
 					switch_out=1;
