@@ -37,7 +37,7 @@ public class Main {
 					Update_student.studentinfo_update();
 					break;
 				case 4:
-					View_student.View();
+					View_student.studentinfo_view();
 					break;
 				case 5:
 					switch_out=1;

@@ -3,52 +3,32 @@ package func_view;
 import java.sql.*;
 import java.util.Scanner;
 
+import util.DatabaseQuery;
+
 public class View_student {
 	
-	protected static Statement stat = null;
-	protected static Connection conn = null;
-	static int id;  // 학번 입력
-	static String name; // 이름 입력
-	static String department; //학과 입력
-	static int phone_number;
-	
-//	private void View_student() {
-//		
-//		try {
-//			Class.forName("com.mysql.jdbc.Driver");
-//			String url = "jdbc:mysql://localhost:3306/sw2015";
-//
-//			conn = DriverManager.getConnection(url, "root", "1234");
-//			stat = conn.createStatement();
-//			//initialize();
-//		} catch (Exception e) {
-//			e.printStackTrace(System.out);
-//		}
-//	}
-	
+	static int input_id;  // 학번 입력
+	static int occur_Existence;		// 해당 학번 가진 학생 있는지 여부 확인
 
-	public static void View() throws Exception {
-	//public void View(int id, String name, String department, int phone_number ) throws Exception {
+	public static void studentinfo_view() throws Exception {
+		Scanner scan = new Scanner(System.in);
 		
-		ResultSet rs = null;
-		Scanner input_some = new Scanner(System.in);
+		while (true) {
 
-		System.out.println("학번 : ");
-		id = input_some.nextInt();
-		
-		if(id == 0){
-			System.out.println("존재하는 ID를 가진 학생이 없습니다.");
-		}else {
-			rs = stat.executeQuery("select* from StudentInformation when ID='"+id+"'");
-				
-//			while(rs.next()){
-//				id = rs.getnextInt();
-//				name = rs.getString(2);
-//				department = rs.getString(3);
-//				phone_number = rs.getInt(4);
-
-//			System.out.println(id + "\t" +name+ "\t" +department+  "\t" +phone_number+ "\t" +"\n");
-//		    }
+			System.out.print("학번을 입력하세요 : ");
+			input_id = scan.nextInt();
+			
+			// 존재여부 체크 함수(=중복 체크 함수) 호출
+			occur_Existence = DatabaseQuery.Database_Checkstudent(input_id);
+			
+			if (occur_Existence == 1) {	// 존재
+				// 해당 ID를 가진 학생의 정보를 보여줌
+				DatabaseQuery.Database_Viewstudent(input_id);
+				break;
+			} else if (occur_Existence == 0) {	// 존재하지 않음
+				System.out.println("-> 존재하지 않는 학번입니다.");
+				System.out.println("-> 다시 작성해 주세요.\n");
+			}
 		}
 	}
 		
