@@ -1,70 +1,67 @@
 package func_update;
 
 import java.sql.*;
+import java.util.Scanner;
+
+import util.DatabaseQuery;
 
 public class Update_student {
+	
+	static int input_id = 0;	// 학번 입력
+	static int occur_Existence;		// 해당 학번 가진 학생 있는지 여부 확인 
+	static String input_phonenumber; // 전화번호 입력
 
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
+	//입력받아서 값 넣기
+	public static void studentinfo_update() throws Exception {
+		Scanner scan = new Scanner(System.in);
 		
-		String driver = "com.mysql.jdbc.Driver";
-		String user = "root";
-		String pass = "1234";
-		String dbURL = "jdbc:mysql://localhost:3306/swe2015";
-		Connection conn = null;
-		Statement stmt = null;
-		
-		//DB 연동 확인
-//		try{
-//			Class.forName(driver);
-//			conn = DriverManager.getConnection(dbURL, user, pass);
-//			System.out.println("Driver found! Connection Good!");
-//		} catch(SQLException se) {
-//			System.out.println("sql error");
-//		} catch(ClassNotFoundException cne) {
-//			System.out.println("jdbc driver not founded!");
-//		}
-		
-		//UPDATE 기능 구현
-		try {
+		while (true) {
 			
-			//DB 연동
-			Class.forName(driver);
-			conn = DriverManager.getConnection(dbURL, user, pass);
-			//SQL문
-			String sql = "UPDATE student SET phone_number='01012341234' WHERE name='선한이'";
-			stmt = conn.createStatement();	//DB 연결 시도
+			System.out.print("전화번호를 수정할 학생의 학번을 입력하세요 : ");
+			input_id = scan.nextInt();
 			
-			//쿼리문을 DB에 전달하고 값 전달받음
-			int result = stmt.executeUpdate(sql);
-			if (result == 1) {	//1일 때 쿼리 실행 성공
-				System.out.println("쿼리 실행 성공");
-			} else {
-				System.out.println("쿼리 실행 실패");
+			// 존재여부 체크 함수(=중복 체크 함수) 호출
+			isExistence(input_id);
+			
+			if (occur_Existence == 1) {	// 존재
+				// 수정할 전화번호 입력 받음
+				System.out.print("새로운 전화번호를 입력하세요 : ");
+				input_phonenumber = scan.next();
+				
+				// 저장 함수 호출
+				updateStudentToDatabase(input_id, input_phonenumber);
+				break;
+			} else if (occur_Existence == 0) {	// 존재하지 않음
+				System.out.println("-> 존재하지 않는 학번입니다.");
+				System.out.println("-> 다시 작성해 주세요.\n");
 			}
 			
-		} catch(SQLException e) {
-			System.out.println("sql error");
-		} catch(ClassNotFoundException e) {
-			System.out.println("jdbc driver not founded!");
-		} finally {
-			//사용한 Statement, resultset, Connection 자원 반납
-			if (stmt != null) {
-				try {
-					stmt.close();
-				} catch(SQLException e) {
-					System.out.println("sql error");
-				}
-			}
-			if (conn != null) {
-				try {
-					conn.close();
-				} catch (SQLException e) {
-					System.out.println("sql error");
-				}
-			}
 		}
-
+		
+	}
+	
+	public static void isExistence(int input_id) {
+		int id = input_id;
+		int existence;
+		
+		// DB에서 같은 학번 찾기
+		existence = DatabaseQuery.Database_Checkstudent(id);
+		
+		// 해당 학생이 존해하는지 여부
+		if (existence > 0) {
+			occur_Existence = 1; // 존재
+		} else if (existence == 0) {
+			occur_Existence = 0; // 존재하지 않음
+		}
+	}
+	
+	public static void updateStudentToDatabase(int id, String phonenum) {
+		try {
+			// DB에 저장
+			DatabaseQuery.Database_Updatestudent(id, phonenum);
+		} catch (Exception e) {
+			System.out.println("Exception:" + e.getMessage());
+		}
 	}
 
 }

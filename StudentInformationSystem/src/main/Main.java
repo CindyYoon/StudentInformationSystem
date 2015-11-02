@@ -3,6 +3,7 @@ package main;
 import java.util.Scanner;
 import func_add.*;
 import func_delete.*;
+import func_update.Update_student;
 //import func_update.*;
 //import func_view.*;
 
@@ -24,12 +25,13 @@ public class Main {
 			menu_choice = input_menu.nextInt();
 			
 			switch(menu_choice) {
-			case '1':
+			case 1:
 				Add_student.studentinfo_add();
-			case '2':
-			case '3':
-			case '4':
-			case '5':
+			case 2:
+			case 3:
+				Update_student.studentinfo_update();
+			case 4:
+			case 5:
 				break;
 			default :
 				System.out.println("메뉴 번호를 확인하시고 입력하세요.");
