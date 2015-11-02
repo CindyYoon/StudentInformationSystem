@@ -9,12 +9,13 @@ import func_update.Update_student;
 
 public class Main {
 	
-	static int menu_choice; // 메뉴 선택
+	static int menu_choice;		// 메뉴 선택
+	static int switch_out=0;	// 종료 여부
 
 	public static void main(String args[]) throws Exception	{
 		Scanner input_menu = new Scanner(System.in);
 		
-		while (true) {
+		while (switch_out==0) {
 			System.out.println("[ 학 생 정 보 시 스 템 ]");
 			System.out.println("1. 학생 정보 추가");
 			System.out.println("2. 학생 정보 삭제");
@@ -25,16 +26,22 @@ public class Main {
 			menu_choice = input_menu.nextInt();
 			
 			switch(menu_choice) {
-			case 1:
-				Add_student.studentinfo_add();
-			case 2:
-			case 3:
-				Update_student.studentinfo_update();
-			case 4:
-			case 5:
-				break;
-			default :
-				System.out.println("메뉴 번호를 확인하시고 입력하세요.");
+				case 1:
+					Add_student.studentinfo_add();
+					break;
+				case 2:
+					Delete_student.studentinfo_delete();
+					break;
+				case 3:
+					Update_student.studentinfo_update();
+					break;
+				case 4:
+					break;
+				case 5:
+					switch_out=1;
+					break;
+				default :
+					System.out.println("메뉴 번호를 확인하시고 입력하세요.");
 			}
 		}
 	}

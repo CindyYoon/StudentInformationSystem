@@ -33,7 +33,7 @@ public class Add_student {
 				System.out.println("-> 다시 작성해 주세요.\n");
 			} else if (occur_duplecation == 0) {
 				// 저장 함수 호출
-				addStudentToDatabase(input_id, input_name, input_depart, input_phonenumber);
+				DatabaseQuery.Database_Addstudent(input_id, input_name, input_depart, input_phonenumber);
 				break;
 			}
 		}
@@ -53,13 +53,5 @@ public class Add_student {
 			occur_duplecation = 0; // 중복 없음
 		}
 	}
-	
-	public static void addStudentToDatabase(int id, String name, String depart, String phonenum) {
-		try {
-			// DB에 저장
-			DatabaseQuery.Database_Addstudent(id, name, depart, phonenum);
-		} catch (Exception e) {
-			System.out.println("Exception:" + e.getMessage());
-		}
-	}
+
 }

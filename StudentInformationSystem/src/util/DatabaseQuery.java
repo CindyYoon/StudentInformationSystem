@@ -27,20 +27,20 @@ public class DatabaseQuery {
 		}
 	}
 	
-	public static void Database_Updatestudent(int id, String phone)
+	public static void Database_Deletestudent(int id)
 	{
 		try
 		{
 			DatabaseConnect.Database_connect();
-			DatabaseConnect.stmt = DatabaseConnect.conn.prepareStatement("UPDATE swe2015.student SET phone_number='"+phone+"' WHERE ID='"+id+"'");
-			DatabaseConnect.stmt.executeUpdate();
+			DatabaseConnect.stmt = DatabaseConnect.conn.prepareStatement("delete from student where ID =" + id );
+			DatabaseConnect.stmt.executeUpdate();	 
 			DatabaseConnect.stmt.close();
 			DatabaseConnect.Database_disconnect();
-			System.out.println("-> 성공적으로 학생정보가 수정되었습니다.\n");
+			System.out.println("-> 성공적으로 학생정보가 삭제되었습니다.\n");
 		}
 		catch (SQLException e)
 		{
-			System.out.println("-> 학생정보 수정에 실패했습니다.\n");
+			System.out.println("-> 학생정보 삭제에 실패했습니다.\n");
 			e.printStackTrace();
 		}
 	}
