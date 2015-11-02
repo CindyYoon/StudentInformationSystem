@@ -5,6 +5,7 @@ import java.sql.*;
 public class DatabaseQuery {
 	static String Values;
 	static String Target;
+	static String sql;
 	static ResultSet resultset;
 	static int duplicate = 0;
 	
@@ -13,8 +14,9 @@ public class DatabaseQuery {
 		try
 		{
 			Target = "("+ id +", '"+ name + "', '" + depart+ "', '" + phone+"')";
+			sql = "Insert into swe2015.student values" + Target;
 			DatabaseConnect.Database_connect();
-			DatabaseConnect.stmt = DatabaseConnect.conn.prepareStatement("Insert into swe2015.student values" + Target);
+			DatabaseConnect.stmt = DatabaseConnect.conn.prepareStatement(sql);
 			DatabaseConnect.stmt.executeUpdate();
 			DatabaseConnect.stmt.close();
 			DatabaseConnect.Database_disconnect();
@@ -31,8 +33,9 @@ public class DatabaseQuery {
 	{
 		try
 		{
+			sql = "delete from student where ID =" + id;
 			DatabaseConnect.Database_connect();
-			DatabaseConnect.stmt = DatabaseConnect.conn.prepareStatement("delete from student where ID =" + id );
+			DatabaseConnect.stmt = DatabaseConnect.conn.prepareStatement(sql);
 			DatabaseConnect.stmt.executeUpdate();	 
 			DatabaseConnect.stmt.close();
 			DatabaseConnect.Database_disconnect();
@@ -49,8 +52,9 @@ public class DatabaseQuery {
 	{
 		try
 		{
+			sql = "UPDATE swe2015.student SET phone_number='"+phone+"' WHERE ID='"+id+"'";
 			DatabaseConnect.Database_connect();
-			DatabaseConnect.stmt = DatabaseConnect.conn.prepareStatement("UPDATE swe2015.student SET phone_number='"+phone+"' WHERE ID='"+id+"'");
+			DatabaseConnect.stmt = DatabaseConnect.conn.prepareStatement(sql);
 			DatabaseConnect.stmt.executeUpdate();
 			DatabaseConnect.stmt.close();
 			DatabaseConnect.Database_disconnect();
@@ -59,6 +63,40 @@ public class DatabaseQuery {
 		catch (SQLException e)
 		{
 			System.out.println("-> 학생정보 수정에 실패했습니다.\n");
+			e.printStackTrace();
+		}
+	}
+	
+	public static void Database_Viewstudent(int input_id)
+	{
+		try
+		{
+			sql = "SELECT * FROM swe2015.student WHERE ID='"+input_id+"'"; 
+			DatabaseConnect.Database_connect();
+			Statement statement;
+			statement = DatabaseConnect.conn.createStatement();
+			ResultSet rs = statement.executeQuery(sql);
+			while (rs.next()) {
+				System.out.println("===========================");
+				String id = rs.getString("ID");
+				System.out.println("  학 번   : " + id);
+				String name = rs.getString("name");
+				System.out.println("  이 름   : " + name);
+				String department = rs.getString("department");
+				System.out.println("  전 공   : " + department);
+				String phone_number = rs.getString("phone_number");
+				System.out.println(" 전화번호 : " + phone_number);
+				System.out.println("===========================");
+				System.out.println("");
+			}
+			
+			DatabaseConnect.stmt.close();
+			DatabaseConnect.Database_disconnect();
+			//System.out.println("-> 성공적으로 학생정보가 호출되었습니다.\n");
+		}
+		catch (SQLException e)
+		{
+			System.out.println("-> 학생정보 보기에 실패했습니다.\n");
 			e.printStackTrace();
 		}
 	}
